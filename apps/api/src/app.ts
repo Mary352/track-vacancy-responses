@@ -27,13 +27,14 @@ app.use('/vacancyresponse', async (req: Request, res: Response, next: NextFuncti
          console.log("Disconnected from DB after timeout");
       }, 5 * 60 * 1000)
 
+      next();
+
    } catch (error) {
       console.log('Connection error: ', error);
 
       sendErrorMessage(res, 500, 'DB connection error');
+      return;
    }
-
-   next()
 });
 
 app.use('/vacancyresponse', VacancyResponseRoutes);
