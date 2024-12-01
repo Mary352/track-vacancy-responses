@@ -14,7 +14,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Job App",
+  title: "Job Search App",
   description: "Track responses for vacancies",
 };
 
