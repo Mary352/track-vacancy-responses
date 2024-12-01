@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import mongoose from "mongoose";
 import 'dotenv/config'
-import { ResponseBody } from '../../types'
-
+import { JobResponseType, ResponseBody } from '../../types'
+import { sendErrorMessage, sendOKMessage } from '../utils/response-messages.util';
 
 const Schema = mongoose.Schema;
 
@@ -22,19 +22,43 @@ class VacancyResponseController {
       try {
          const jobResponses = await JobResponse.find({});
 
-         const responseBody: ResponseBody = {
-            message: jobResponses
-         }
-
-         res.json(responseBody);
+         sendOKMessage(res, jobResponses)
 
       } catch (error) {
          console.log('Error finding data: ', error);
-         const responseBody: ResponseBody = {
-            error: 'Error finding data'
+
+         sendErrorMessage(res, 500, 'Error finding data')
+      }
+
+      return;
+   }
+
+   async create(req: Request, res: Response) {
+      try {
+         const newJobResponse: JobResponseType = req.body.newJobResponse;
+
+         // only field "note" can be empty
+         for (const key in newJobResponse) {
+            if (Object.prototype.hasOwnProperty.call(newJobResponse, key)) {
+               const element: string = newJobResponse[key as keyof JobResponseType];
+               if (!element && key !== 'note') {
+                  sendErrorMessage(res, 422, 'Error data from client. Empty fields found');
+                  return;
+               }
+            }
          }
 
-         res.json(responseBody);
+         const jobResponse = new JobResponse(newJobResponse);
+         await jobResponse.save()
+
+         const jobResponses = await JobResponse.find({});
+
+         sendOKMessage(res, jobResponses)
+
+      } catch (error) {
+         console.log('Error creating job response: ', error);
+
+         sendErrorMessage(res, 500, 'Error creating job response');
       }
 
       return;
