@@ -20,9 +20,9 @@ class VacancyResponseController {
 
    async getAll(req: Request, res: Response) {
       try {
-         const jobResponses = await JobResponse.find({});
+         const jobResponsesArr = await JobResponse.find({});
 
-         sendOKMessage(res, jobResponses)
+         sendOKMessage(res, jobResponsesArr)
 
       } catch (error) {
          console.log('Error finding data: ', error);
@@ -51,14 +51,37 @@ class VacancyResponseController {
          const jobResponse = new JobResponse(newJobResponse);
          await jobResponse.save()
 
-         const jobResponses = await JobResponse.find({});
+         const jobResponsesArr = await JobResponse.find({});
 
-         sendOKMessage(res, jobResponses)
+         sendOKMessage(res, jobResponsesArr)
 
       } catch (error) {
          console.log('Error creating job response: ', error);
 
          sendErrorMessage(res, 500, 'Error creating job response');
+      }
+
+      return;
+   }
+
+   async delete(req: Request, res: Response) {
+      try {
+         const jobResponseId = req.params.id;
+
+         const jobResponse = await JobResponse.findByIdAndDelete(jobResponseId);
+
+         if (jobResponse) {
+            const jobResponsesArr = await JobResponse.find({});
+
+            sendOKMessage(res, jobResponsesArr)
+         } else {
+            sendErrorMessage(res, 404, 'Job response not found')
+         }
+
+      } catch (error) {
+         console.log('Error finding job response for delete: ', error);
+
+         sendErrorMessage(res, 500, 'Incorrect id')
       }
 
       return;

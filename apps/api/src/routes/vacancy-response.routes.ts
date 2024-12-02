@@ -5,5 +5,6 @@ const router = Router();
 
 router.get('/', VacancyResponseController.getAll);
 router.post('/', VacancyResponseController.create);
+router.post('/delete/:id', VacancyResponseController.delete);
 
 export default router;
