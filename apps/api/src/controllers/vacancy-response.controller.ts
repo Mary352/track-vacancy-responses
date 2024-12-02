@@ -86,6 +86,30 @@ class VacancyResponseController {
 
       return;
    }
+
+   async update(req: Request, res: Response) {
+      try {
+         const jobResponseId = req.params.id;
+         const newJobResponse: JobResponseType = req.body.newJobResponse;
+
+         const jobResponse = await JobResponse.findByIdAndUpdate(jobResponseId, newJobResponse);
+
+         if (jobResponse) {
+            const jobResponsesArr = await JobResponse.find({});
+
+            sendOKMessage(res, jobResponsesArr)
+         } else {
+            sendErrorMessage(res, 404, 'Job response not found')
+         }
+
+      } catch (error) {
+         console.log('Error finding job response for update: ', error);
+
+         sendErrorMessage(res, 500, 'Incorrect id')
+      }
+
+      return;
+   }
 }
 
 export default new VacancyResponseController();
