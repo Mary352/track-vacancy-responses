@@ -4,12 +4,14 @@ import 'dotenv/config'
 import VacancyResponseRoutes from './routes/vacancy-response.routes';
 import { ResponseBody } from '../types';
 import { sendErrorMessage } from './utils/response-messages.util';
+import cors from 'cors'
 
 const app = express();
 const port = 3001;
 let timerId: ReturnType<typeof setTimeout>;
 
 app.use(express.json());
+app.use(cors());
 
 app.use('/vacancyresponse', async (req: Request, res: Response, next: NextFunction) => {
    try {
