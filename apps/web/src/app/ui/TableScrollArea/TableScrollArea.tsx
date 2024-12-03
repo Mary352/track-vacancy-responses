@@ -3,31 +3,49 @@
 import { JobResponseType, ResponseBody } from 'api/types'
 import { useState, useEffect } from 'react';
 import cx from 'clsx';
-import { ScrollArea, Table } from '@mantine/core';
+import { Button, ScrollArea, Table } from '@mantine/core';
 import classes from './TableScrollArea.module.css';
+import { FetchOptions } from '../../../../types';
 
 export function TableScrollArea() {
+   const JOB_RESPONSE_URL = '/vacancyresponse'
+   const JOB_RESPONSE_ACTIONS_URLS = {
+      create: '/create',
+      update: '/update',
+      delete: '/delete'
+   }
 
    const [scrolled, setScrolled] = useState(false);
    const [jobResponsesArr, setJobResponsesArr] = useState<JobResponseType[]>([]);
    const [errorMessage, setErrorMessage] = useState('');
 
-   useEffect(() => {
-      async function getJobResponses() {
-         const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/vacancyresponse')
-         const data: ResponseBody = await res.json()
+   async function getJobResponses(url: string, method: string, body = undefined) {
+      let options: FetchOptions = {
+         method: method
+      };
 
-         if (data.hasOwnProperty('message')) {
-            setJobResponsesArr(data.message)
-         }
-
-         if (data.hasOwnProperty('error') && data.error !== undefined) {
-            setErrorMessage(data.error)
-         }
+      if (body) {
+         options.body = body
       }
 
-      getJobResponses();
+      const res = await fetch(url, options)
+      const data: ResponseBody = await res.json()
 
+      if (data.hasOwnProperty('message')) {
+         setJobResponsesArr(data.message)
+      }
+
+      if (data.hasOwnProperty('error') && data.error !== undefined) {
+         setErrorMessage(data.error)
+      }
+   }
+
+   async function deleteJobResponse(id?: string) {
+      getJobResponses(process.env.NEXT_PUBLIC_API_URL + JOB_RESPONSE_URL + JOB_RESPONSE_ACTIONS_URLS.delete + `/${id}`, "POST");
+   }
+
+   useEffect(() => {
+      getJobResponses(process.env.NEXT_PUBLIC_API_URL + JOB_RESPONSE_URL, "GET");
    }, [])
 
 
@@ -38,6 +56,7 @@ export function TableScrollArea() {
          <Table.Td>{row.salary_range}</Table.Td>
          <Table.Td>{row.status}</Table.Td>
          <Table.Td>{row.note}</Table.Td>
+         <Table.Td><Button onClick={() => { deleteJobResponse(row._id) }}>Delete</Button></Table.Td>
       </Table.Tr>
    ));
 
