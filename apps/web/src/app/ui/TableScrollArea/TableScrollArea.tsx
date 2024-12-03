@@ -31,8 +31,8 @@ export function TableScrollArea() {
    }, [])
 
 
-   const rows = jobResponsesArr.map((row, index) => (
-      <Table.Tr key={index}>
+   const rows = jobResponsesArr.map((row) => (
+      <Table.Tr key={row._id}>
          <Table.Td>{row.company}</Table.Td>
          <Table.Td>{row.vacancy}</Table.Td>
          <Table.Td>{row.salary_range}</Table.Td>
