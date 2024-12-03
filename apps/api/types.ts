@@ -4,6 +4,7 @@ export type ResponseBody = {
 }
 
 export type JobResponseType = {
+   _id?: string,
    company: string,
    vacancy: string,
    salary_range: string,

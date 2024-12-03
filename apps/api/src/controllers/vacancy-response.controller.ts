@@ -37,11 +37,11 @@ class VacancyResponseController {
       try {
          const newJobResponse: JobResponseType = req.body.newJobResponse;
 
-         // only field "note" can be empty
+         // only fields "note" and "_id" can be empty
          for (const key in newJobResponse) {
             if (Object.prototype.hasOwnProperty.call(newJobResponse, key)) {
-               const element: string = newJobResponse[key as keyof JobResponseType];
-               if (!element && key !== 'note') {
+               const element = newJobResponse[key as keyof JobResponseType];
+               if (key !== '_id' && key !== 'note' && !element) {
                   sendErrorMessage(res, 422, 'Error data from client. Empty fields found');
                   return;
                }
