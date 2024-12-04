@@ -6,18 +6,17 @@ import cx from 'clsx';
 import { Button, ScrollArea, Table } from '@mantine/core';
 import classes from './TableScrollArea.module.css';
 import { FetchOptions } from '../../../../types';
+import { TableRow } from '../TableRow/TableRow';
 
 export function TableScrollArea() {
    const JOB_RESPONSE_URL = '/vacancyresponse'
-   const JOB_RESPONSE_ACTIONS_URLS = {
-      create: '/create',
-      update: '/update',
-      delete: '/delete'
-   }
 
    const [scrolled, setScrolled] = useState(false);
    const [jobResponsesArr, setJobResponsesArr] = useState<JobResponseType[]>([]);
    const [errorMessage, setErrorMessage] = useState('');
+
+   // Inputs for create
+
 
    async function getJobResponses(url: string, method: string, body = undefined) {
       let options: FetchOptions = {
@@ -25,7 +24,10 @@ export function TableScrollArea() {
       };
 
       if (body) {
-         options.body = body
+         options.headers = {
+            'Content-Type': 'application/json;charset=utf-8'
+         }
+         options.body = JSON.stringify(body)
       }
 
       const res = await fetch(url, options)
@@ -40,24 +42,12 @@ export function TableScrollArea() {
       }
    }
 
-   async function deleteJobResponse(id?: string) {
-      getJobResponses(process.env.NEXT_PUBLIC_API_URL + JOB_RESPONSE_URL + JOB_RESPONSE_ACTIONS_URLS.delete + `/${id}`, "POST");
-   }
-
    useEffect(() => {
       getJobResponses(process.env.NEXT_PUBLIC_API_URL + JOB_RESPONSE_URL, "GET");
    }, [])
 
-
    const rows = jobResponsesArr.map((row) => (
-      <Table.Tr key={row._id}>
-         <Table.Td>{row.company}</Table.Td>
-         <Table.Td>{row.vacancy}</Table.Td>
-         <Table.Td>{row.salary_range}</Table.Td>
-         <Table.Td>{row.status}</Table.Td>
-         <Table.Td>{row.note}</Table.Td>
-         <Table.Td><Button onClick={() => { deleteJobResponse(row._id) }}>Delete</Button></Table.Td>
-      </Table.Tr>
+      <TableRow key={row._id} jobResponse={row} getJobResponses={getJobResponses}></TableRow>
    ));
 
    // if (jobResponsesArr.length === 0) return <div>Loading...</div>
@@ -65,7 +55,7 @@ export function TableScrollArea() {
    return (
       <div>
          <ScrollArea h={300} onScrollPositionChange={({ y }) => setScrolled(y !== 0)}>
-            <Table maw={900}>
+            <Table>
                <Table.Thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
                   <Table.Tr>
                      <Table.Th>Company</Table.Th>
