@@ -7,16 +7,14 @@ import { Button, ScrollArea, Table } from '@mantine/core';
 import classes from './TableScrollArea.module.css';
 import { FetchOptions } from '../../../../types';
 import { TableRow } from '../TableRow/TableRow';
+import { TableRowInput } from '../TableRowInput/TableRowInput';
+import { JOB_RESPONSE_URL } from '../../../../constants/api.constants';
+import { JOB_RESPONSE_FIELDS } from '../../../../constants/text.constants';
 
 export function TableScrollArea() {
-   const JOB_RESPONSE_URL = '/vacancyresponse'
-
    const [scrolled, setScrolled] = useState(false);
    const [jobResponsesArr, setJobResponsesArr] = useState<JobResponseType[]>([]);
    const [errorMessage, setErrorMessage] = useState('');
-
-   // Inputs for create
-
 
    async function getJobResponses(url: string, method: string, body = undefined) {
       let options: FetchOptions = {
@@ -58,14 +56,17 @@ export function TableScrollArea() {
             <Table>
                <Table.Thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
                   <Table.Tr>
-                     <Table.Th>Company</Table.Th>
-                     <Table.Th>Vacancy</Table.Th>
-                     <Table.Th>Salary range</Table.Th>
-                     <Table.Th>Status</Table.Th>
-                     <Table.Th>Note</Table.Th>
+                     <Table.Th>{JOB_RESPONSE_FIELDS.company}</Table.Th>
+                     <Table.Th>{JOB_RESPONSE_FIELDS.vacancy}</Table.Th>
+                     <Table.Th>{JOB_RESPONSE_FIELDS.salaryRange}</Table.Th>
+                     <Table.Th>{JOB_RESPONSE_FIELDS.status}</Table.Th>
+                     <Table.Th>{JOB_RESPONSE_FIELDS.note}</Table.Th>
                   </Table.Tr>
                </Table.Thead>
-               <Table.Tbody>{rows}</Table.Tbody>
+               <Table.Tbody>
+                  {rows}
+                  <TableRowInput getJobResponses={getJobResponses}></TableRowInput>
+               </Table.Tbody>
             </Table>
          </ScrollArea>
          {errorMessage && <p>{errorMessage}</p>}

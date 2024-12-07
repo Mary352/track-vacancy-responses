@@ -3,15 +3,9 @@
 import { useState } from 'react';
 import { Button, Table, TextInput } from '@mantine/core';
 import { TableRowProps, UpdateBody } from '../../../../types';
+import { JOB_RESPONSE_ACTIONS_URLS, JOB_RESPONSE_URL } from '../../../../constants/api.constants';
 
 export function TableRow({ jobResponse, getJobResponses }: TableRowProps) {
-   const JOB_RESPONSE_URL = '/vacancyresponse'
-   const JOB_RESPONSE_ACTIONS_URLS = {
-      create: '/create',
-      update: '/update',
-      delete: '/delete'
-   }
-
    const [isOnEdit, setIsOnEdit] = useState(false);
 
    // Inputs for update
