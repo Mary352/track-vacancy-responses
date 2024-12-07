@@ -61,6 +61,8 @@ export function TableScrollArea() {
                      <Table.Th>{JOB_RESPONSE_FIELDS.salaryRange}</Table.Th>
                      <Table.Th>{JOB_RESPONSE_FIELDS.status}</Table.Th>
                      <Table.Th>{JOB_RESPONSE_FIELDS.note}</Table.Th>
+                     <Table.Th></Table.Th>
+                     <Table.Th></Table.Th>
                   </Table.Tr>
                </Table.Thead>
                <Table.Tbody>

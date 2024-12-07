@@ -107,7 +107,7 @@ export function TableRowInput({ getJobResponses }: TableRowInputProps) {
          </Table.Td>
          <Table.Td>
             <Button onClick={createJobResponse}>Create</Button>
-            <Button onClick={clearInputs}>Clear all inputs</Button>
+            <Button onClick={clearInputs}>Clear inputs</Button>
          </Table.Td>
       </Table.Tr>
    )
