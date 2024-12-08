@@ -5,3 +5,11 @@ export const JOB_RESPONSE_FIELDS = {
    status: 'Status',
    note: 'Note'
 }
+
+export const JOB_RESPONSE_KEYS = {
+   company: 'company',
+   vacancy: 'vacancy',
+   salaryRange: 'salaryRange',
+   status: 'status',
+   note: 'note'
+}

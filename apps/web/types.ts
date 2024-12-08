@@ -1,5 +1,4 @@
 import { JobResponseType } from "api/types"
-import { ChangeEvent } from "react"
 
 export type FetchOptions = {
    method: string,
@@ -14,15 +13,19 @@ export type TableRowProps = {
    getJobResponses(url: string, method: string, body?: any): void
 }
 
-export type TableRowInputProps = {
+export type CreateFormModalProps = {
+   opened: boolean,
+   open: () => void,
+   close: () => void,
    getJobResponses(url: string, method: string, body?: any): void
 }
 
-export type CreateInputProps = {
-   value: string,
-   placeholder: string,
-   handleChange(e: ChangeEvent<HTMLInputElement>): void,
-   errorText: string
+export type ConfirmModalProps = {
+   opened: boolean,
+   jobResponseId?: string,
+   open: () => void,
+   close: () => void,
+   getJobResponses(url: string, method: string, body?: any): void
 }
 
 export type UpdateBody = {
@@ -33,5 +36,4 @@ export type UpdateBody = {
       status?: string,
       note: string
    }
-
 }

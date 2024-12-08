@@ -1,12 +1,13 @@
-'use client'
-
 import { useState } from 'react';
-import { Button, Table, TextInput } from '@mantine/core';
+import { Button, Group, Table, TextInput } from '@mantine/core';
 import { TableRowProps, UpdateBody } from '../../../../types';
 import { JOB_RESPONSE_ACTIONS_URLS, JOB_RESPONSE_URL } from '../../../../constants/api.constants';
+import { useDisclosure } from '@mantine/hooks';
+import { ConfirmModal } from '../ConfirmModal/ConfirmModal';
 
 export function TableRow({ jobResponse, getJobResponses }: TableRowProps) {
    const [isOnEdit, setIsOnEdit] = useState(false);
+   const [opened, { open, close }] = useDisclosure(false);
 
    // Inputs for update
    const [company, setCompany] = useState(jobResponse.company);
@@ -15,11 +16,11 @@ export function TableRow({ jobResponse, getJobResponses }: TableRowProps) {
    const [status, setStatus] = useState(jobResponse.status);
    const [note, setNote] = useState(jobResponse.note);
 
-   async function editJobResponse() {
+   function editJobResponse() {
       setIsOnEdit(true)
    }
 
-   async function cancelEditJobResponse() {
+   function cancelEditJobResponse() {
       setIsOnEdit(false)
 
       setCompany(jobResponse.company)
@@ -29,7 +30,7 @@ export function TableRow({ jobResponse, getJobResponses }: TableRowProps) {
       setNote(jobResponse.note);
    }
 
-   async function updateJobResponse(id?: string) {
+   function updateJobResponse(id?: string) {
       let body: UpdateBody = {
          newJobResponse: { note }
       }
@@ -43,19 +44,13 @@ export function TableRow({ jobResponse, getJobResponses }: TableRowProps) {
       setIsOnEdit(false)
    }
 
-   async function deleteJobResponse(id?: string) {
-      getJobResponses(process.env.NEXT_PUBLIC_API_URL + JOB_RESPONSE_URL + JOB_RESPONSE_ACTIONS_URLS.delete + `/${id}`, "POST");
-   }
-
    if (isOnEdit) return (
       <Table.Tr key={jobResponse._id}>
-
          <Table.Td>
             <TextInput
                value={company}
                onChange={(e) => { setCompany(e.target.value) }}
                placeholder="Company"
-               inputWrapperOrder={['label', 'input', 'error', 'description']}
             />
          </Table.Td>
          <Table.Td>
@@ -63,7 +58,6 @@ export function TableRow({ jobResponse, getJobResponses }: TableRowProps) {
                value={vacancy}
                onChange={(e) => setVacancy(e.target.value)}
                placeholder="Vacancy"
-               inputWrapperOrder={['label', 'input', 'error', 'description']}
             />
          </Table.Td>
          <Table.Td>
@@ -71,7 +65,6 @@ export function TableRow({ jobResponse, getJobResponses }: TableRowProps) {
                value={salaryRange}
                onChange={(e) => setSalaryRange(e.target.value)}
                placeholder="Salary range"
-               inputWrapperOrder={['label', 'input', 'error', 'description']}
             />
          </Table.Td>
          <Table.Td>
@@ -79,7 +72,6 @@ export function TableRow({ jobResponse, getJobResponses }: TableRowProps) {
                value={status}
                onChange={(e) => setStatus(e.target.value)}
                placeholder="Status"
-               inputWrapperOrder={['label', 'input', 'error', 'description']}
             />
          </Table.Td>
          <Table.Td>
@@ -87,14 +79,15 @@ export function TableRow({ jobResponse, getJobResponses }: TableRowProps) {
                value={note}
                onChange={(e) => setNote(e.target.value)}
                placeholder="Note"
-               inputWrapperOrder={['label', 'input', 'error', 'description']}
             />
          </Table.Td>
          <Table.Td>
-            <Button onClick={() => { updateJobResponse(jobResponse._id) }}>Update</Button>
-            <Button onClick={() => { cancelEditJobResponse() }}>Cancel</Button>
+            <Group>
+               <Button onClick={() => { updateJobResponse(jobResponse._id) }}>Update</Button>
+               <Button onClick={cancelEditJobResponse} color='#FF3300'>Cancel</Button>
+            </Group>
          </Table.Td>
-         <Table.Td><Button onClick={() => { deleteJobResponse(jobResponse._id) }}>Delete</Button></Table.Td>
+         <ConfirmModal close={close} open={open} opened={opened} jobResponseId={jobResponse._id} getJobResponses={getJobResponses} />
       </Table.Tr>
    )
 
@@ -105,8 +98,8 @@ export function TableRow({ jobResponse, getJobResponses }: TableRowProps) {
          <Table.Td>{jobResponse.salary_range}</Table.Td>
          <Table.Td>{jobResponse.status}</Table.Td>
          <Table.Td>{jobResponse.note}</Table.Td>
-         <Table.Td><Button onClick={() => { editJobResponse() }}>Edit</Button></Table.Td>
-         <Table.Td><Button onClick={() => { deleteJobResponse(jobResponse._id) }}>Delete</Button></Table.Td>
-      </Table.Tr>
+         <Table.Td><Button onClick={editJobResponse}>Edit</Button></Table.Td>
+         <ConfirmModal close={close} open={open} opened={opened} jobResponseId={jobResponse._id} getJobResponses={getJobResponses} />
+      </Table.Tr >
    );
 }

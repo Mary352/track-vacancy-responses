@@ -3,18 +3,20 @@
 import { JobResponseType, ResponseBody } from 'api/types'
 import { useState, useEffect } from 'react';
 import cx from 'clsx';
-import { Button, ScrollArea, Table } from '@mantine/core';
+import { ScrollArea, Table } from '@mantine/core';
 import classes from './TableScrollArea.module.css';
 import { FetchOptions } from '../../../../types';
 import { TableRow } from '../TableRow/TableRow';
-import { TableRowInput } from '../TableRowInput/TableRowInput';
 import { JOB_RESPONSE_URL } from '../../../../constants/api.constants';
 import { JOB_RESPONSE_FIELDS } from '../../../../constants/text.constants';
+import { CreateFormModal } from '../CreateFormModal/CreateFormModal';
+import { useDisclosure } from '@mantine/hooks';
 
 export function TableScrollArea() {
    const [scrolled, setScrolled] = useState(false);
    const [jobResponsesArr, setJobResponsesArr] = useState<JobResponseType[]>([]);
    const [errorMessage, setErrorMessage] = useState('');
+   const [opened, { open, close }] = useDisclosure(false);
 
    async function getJobResponses(url: string, method: string, body = undefined) {
       let options: FetchOptions = {
@@ -67,7 +69,7 @@ export function TableScrollArea() {
                </Table.Thead>
                <Table.Tbody>
                   {rows}
-                  <TableRowInput getJobResponses={getJobResponses}></TableRowInput>
+                  <CreateFormModal opened={opened} open={open} close={close} getJobResponses={getJobResponses} />
                </Table.Tbody>
             </Table>
          </ScrollArea>
