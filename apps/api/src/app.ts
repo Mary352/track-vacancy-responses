@@ -34,7 +34,7 @@ app.use('/vacancyresponse', async (req: Request, res: Response, next: NextFuncti
    } catch (error) {
       console.log('Connection error: ', error);
 
-      sendErrorMessage(res, 500, 'DB connection error');
+      sendErrorMessage(res, 500, 'Database connection error');
       return;
    }
 });

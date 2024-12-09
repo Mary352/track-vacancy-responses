@@ -2,10 +2,10 @@ import { Modal, Button, Table, Group, Text } from '@mantine/core';
 import { ConfirmModalProps } from '../../../../types';
 import { JOB_RESPONSE_ACTIONS_URLS, JOB_RESPONSE_URL } from '../../../../constants/api.constants';
 
-export function ConfirmModal({ opened, jobResponseId, open, close, getJobResponses }: ConfirmModalProps) {
+export function ConfirmModal({ opened, jobResponseId, open, close, fetchJobResponses }: ConfirmModalProps) {
 
    function deleteJobResponse(id?: string) {
-      getJobResponses(process.env.NEXT_PUBLIC_API_URL + JOB_RESPONSE_URL + JOB_RESPONSE_ACTIONS_URLS.delete + `/${id}`, "POST");
+      fetchJobResponses(process.env.NEXT_PUBLIC_API_URL + JOB_RESPONSE_URL + JOB_RESPONSE_ACTIONS_URLS.delete + `/${id}`, "POST");
       close()
    }
 

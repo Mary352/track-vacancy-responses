@@ -5,7 +5,7 @@ import { FormEvent } from 'react';
 import { CreateFormModalProps } from '../../../../types';
 import { JOB_RESPONSE_URL } from '../../../../constants/api.constants';
 
-export function CreateFormModal({ opened, open, close, getJobResponses }: CreateFormModalProps) {
+export function CreateFormModal({ opened, open, close, fetchJobResponses }: CreateFormModalProps) {
 
    const form = useForm({
       mode: 'uncontrolled',
@@ -28,7 +28,7 @@ export function CreateFormModal({ opened, open, close, getJobResponses }: Create
             }
          }
 
-         getJobResponses(process.env.NEXT_PUBLIC_API_URL + JOB_RESPONSE_URL, "POST", body);
+         fetchJobResponses(process.env.NEXT_PUBLIC_API_URL + JOB_RESPONSE_URL, "POST", body);
          form.reset()
          close()
       }

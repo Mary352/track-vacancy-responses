@@ -3,7 +3,7 @@
 import { JobResponseType, ResponseBody } from 'api/types'
 import { useState, useEffect } from 'react';
 import cx from 'clsx';
-import { ScrollArea, Table } from '@mantine/core';
+import { ScrollArea, Table, Text } from '@mantine/core';
 import classes from './TableScrollArea.module.css';
 import { FetchOptions } from '../../../../types';
 import { TableRow } from '../TableRow/TableRow';
@@ -18,7 +18,7 @@ export function TableScrollArea() {
    const [errorMessage, setErrorMessage] = useState('');
    const [opened, { open, close }] = useDisclosure(false);
 
-   async function getJobResponses(url: string, method: string, body = undefined) {
+   async function fetchJobResponses(url: string, method: string, body = undefined) {
       let options: FetchOptions = {
          method: method
       };
@@ -43,11 +43,11 @@ export function TableScrollArea() {
    }
 
    useEffect(() => {
-      getJobResponses(process.env.NEXT_PUBLIC_API_URL + JOB_RESPONSE_URL, "GET");
+      fetchJobResponses(process.env.NEXT_PUBLIC_API_URL + JOB_RESPONSE_URL, "GET");
    }, [])
 
    const rows = jobResponsesArr.map((row) => (
-      <TableRow key={row._id} jobResponse={row} getJobResponses={getJobResponses}></TableRow>
+      <TableRow key={row._id} jobResponse={row} fetchJobResponses={fetchJobResponses}></TableRow>
    ));
 
    // if (jobResponsesArr.length === 0) return <div>Loading...</div>
@@ -69,11 +69,11 @@ export function TableScrollArea() {
                </Table.Thead>
                <Table.Tbody>
                   {rows}
-                  <CreateFormModal opened={opened} open={open} close={close} getJobResponses={getJobResponses} />
+                  <CreateFormModal opened={opened} open={open} close={close} fetchJobResponses={fetchJobResponses} />
                </Table.Tbody>
             </Table>
          </ScrollArea>
-         {errorMessage && <p>{errorMessage}</p>}
+         {errorMessage && <Text size='md' c='#FF3300' p='md'>{errorMessage}</Text>}
       </div>
    );
 }

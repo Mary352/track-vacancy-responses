@@ -10,14 +10,14 @@ export type FetchOptions = {
 
 export type TableRowProps = {
    jobResponse: JobResponseType,
-   getJobResponses(url: string, method: string, body?: any): void
+   fetchJobResponses(url: string, method: string, body?: any): void
 }
 
 export type CreateFormModalProps = {
    opened: boolean,
    open: () => void,
    close: () => void,
-   getJobResponses(url: string, method: string, body?: any): void
+   fetchJobResponses(url: string, method: string, body?: any): void
 }
 
 export type ConfirmModalProps = {
@@ -25,7 +25,7 @@ export type ConfirmModalProps = {
    jobResponseId?: string,
    open: () => void,
    close: () => void,
-   getJobResponses(url: string, method: string, body?: any): void
+   fetchJobResponses(url: string, method: string, body?: any): void
 }
 
 export type UpdateBody = {

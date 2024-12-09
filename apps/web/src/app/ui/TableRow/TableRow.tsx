@@ -5,7 +5,7 @@ import { JOB_RESPONSE_ACTIONS_URLS, JOB_RESPONSE_URL } from '../../../../constan
 import { useDisclosure } from '@mantine/hooks';
 import { ConfirmModal } from '../ConfirmModal/ConfirmModal';
 
-export function TableRow({ jobResponse, getJobResponses }: TableRowProps) {
+export function TableRow({ jobResponse, fetchJobResponses }: TableRowProps) {
    const [isOnEdit, setIsOnEdit] = useState(false);
    const [opened, { open, close }] = useDisclosure(false);
 
@@ -40,7 +40,7 @@ export function TableRow({ jobResponse, getJobResponses }: TableRowProps) {
       if (salaryRange) body.newJobResponse.salary_range = salaryRange
       if (status) body.newJobResponse.status = status
 
-      getJobResponses(process.env.NEXT_PUBLIC_API_URL + JOB_RESPONSE_URL + JOB_RESPONSE_ACTIONS_URLS.update + `/${id}`, "POST", body);
+      fetchJobResponses(process.env.NEXT_PUBLIC_API_URL + JOB_RESPONSE_URL + JOB_RESPONSE_ACTIONS_URLS.update + `/${id}`, "POST", body);
       setIsOnEdit(false)
    }
 
@@ -87,7 +87,7 @@ export function TableRow({ jobResponse, getJobResponses }: TableRowProps) {
                <Button onClick={cancelEditJobResponse} color='#FF3300'>Cancel</Button>
             </Group>
          </Table.Td>
-         <ConfirmModal close={close} open={open} opened={opened} jobResponseId={jobResponse._id} getJobResponses={getJobResponses} />
+         <ConfirmModal close={close} open={open} opened={opened} jobResponseId={jobResponse._id} fetchJobResponses={fetchJobResponses} />
       </Table.Tr>
    )
 
@@ -99,7 +99,7 @@ export function TableRow({ jobResponse, getJobResponses }: TableRowProps) {
          <Table.Td>{jobResponse.status}</Table.Td>
          <Table.Td>{jobResponse.note}</Table.Td>
          <Table.Td><Button onClick={editJobResponse}>Edit</Button></Table.Td>
-         <ConfirmModal close={close} open={open} opened={opened} jobResponseId={jobResponse._id} getJobResponses={getJobResponses} />
+         <ConfirmModal close={close} open={open} opened={opened} jobResponseId={jobResponse._id} fetchJobResponses={fetchJobResponses} />
       </Table.Tr >
    );
 }

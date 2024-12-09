@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import mongoose from "mongoose";
 import 'dotenv/config'
-import { JobResponseType, ResponseBody } from '../../types'
+import { JobResponseType } from '../../types'
 import { sendErrorMessage, sendOKMessage } from '../utils/response-messages.util';
 
 const Schema = mongoose.Schema;
@@ -81,7 +81,7 @@ class VacancyResponseController {
       } catch (error) {
          console.log('Error finding job response for delete: ', error);
 
-         sendErrorMessage(res, 500, 'Incorrect id')
+         sendErrorMessage(res, 500, 'Incorrect job response id')
       }
 
       return;
@@ -105,7 +105,7 @@ class VacancyResponseController {
       } catch (error) {
          console.log('Error finding job response for update: ', error);
 
-         sendErrorMessage(res, 500, 'Incorrect id')
+         sendErrorMessage(res, 500, 'Incorrect job response id')
       }
 
       return;
