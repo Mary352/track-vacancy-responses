@@ -46,11 +46,11 @@ export function TableScrollArea() {
    }
 
    useEffect(() => {
-      const url_base = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_CODESANDBOX_HOST
-
+      const url_base = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_CODESANDBOX_HOST;
       let url_codesandbox_base;
+
       if (url_base && !url_base.includes('localhost')) {
-         url_codesandbox_base = url_base.replace('3000', '3001')
+         url_codesandbox_base = 'https://' + url_base.replace('$PORT', '3001');
       }
 
       fetchJobResponses((url_codesandbox_base || url_base) + JOB_RESPONSE_URL, "GET");
