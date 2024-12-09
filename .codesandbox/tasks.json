@@ -1,0 +1,15 @@
+{
+   "$schema": "https://codesandbox.io/schemas/tasks.json",
+   "tasks": {
+      "start-api": {
+         "name": "start-api",
+         "command": "yarn workspace api start",
+         "runAtStart": true
+      },
+      "start-web": {
+         "name": "start-web",
+         "command": "yarn workspace web deploy-start",
+         "runAtStart": true
+      }
+   }
+}

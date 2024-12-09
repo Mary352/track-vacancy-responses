@@ -25,6 +25,9 @@ export function TableScrollArea() {
 
       if (body) {
          options.headers = {
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET,PATCH',
             'Content-Type': 'application/json;charset=utf-8'
          }
          options.body = JSON.stringify(body)

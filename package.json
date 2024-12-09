@@ -4,9 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "private": true,
-  "scripts": {
-    "parallel-start": "concurrently \"yarn workspace api start\" \"yarn workspace web deploy-start\""
-  },
   "workspaces": [
     "apps/*"
   ],

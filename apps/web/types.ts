@@ -3,6 +3,9 @@ import { JobResponseType } from "api/types"
 export type FetchOptions = {
    method: string,
    headers?: {
+      'Access-Control-Allow-Headers': string;
+      'Access-Control-Allow-Origin': string;
+      'Access-Control-Allow-Methods': string;
       'Content-Type': string
    },
    body?: any
