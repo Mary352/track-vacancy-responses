@@ -4,7 +4,9 @@ export const getBaseUrl = () => {
    let url_codesandbox_base;
 
    if (url_base && !url_base.includes('localhost')) {
-      url_codesandbox_base = `https://${url_base.replace('3000', '3001')}`;
+      console.log("url_base.replace('$PORT', '3001'): ", url_base.replace('$PORT', '3001'))
+
+      url_codesandbox_base = `https://${url_base.replace('$PORT', '3001')}`;
 
       console.log("url_codesandbox_base: ", url_codesandbox_base)
       return url_codesandbox_base
