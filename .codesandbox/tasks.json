@@ -3,13 +3,19 @@
    "tasks": {
       "start-api": {
          "name": "start-api",
-         "command": "yarn workspace api start",
-         "runAtStart": true
+         "command": "yarn workspace api start"
       },
       "start-web": {
          "name": "start-web",
-         "command": "yarn workspace web deploy-start",
-         "runAtStart": true
+         "command": "yarn workspace web deploy-start"
+      },
+      "start-dev-api": {
+         "name": "start-dev-api",
+         "command": "yarn workspace api dev"
+      },
+      "start-dev-web": {
+         "name": "start-dev-web",
+         "command": "yarn workspace web dev"
       }
    }
 }
