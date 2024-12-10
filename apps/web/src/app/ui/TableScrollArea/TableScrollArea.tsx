@@ -11,6 +11,7 @@ import { JOB_RESPONSE_URL } from '../../../../constants/api.constants';
 import { JOB_RESPONSE_FIELDS } from '../../../../constants/text.constants';
 import { CreateFormModal } from '../CreateFormModal/CreateFormModal';
 import { useDisclosure } from '@mantine/hooks';
+import { getBaseUrl } from '@/app/lib/convertings';
 
 export function TableScrollArea() {
    const [scrolled, setScrolled] = useState(false);
@@ -46,14 +47,9 @@ export function TableScrollArea() {
    }
 
    useEffect(() => {
-      const url_base = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_CODESANDBOX_HOST;
-      let url_codesandbox_base;
+      console.log("getBaseUrl() + JOB_RESPONSE_URL: ", getBaseUrl() + JOB_RESPONSE_URL)
 
-      if (url_base && !url_base.includes('localhost')) {
-         url_codesandbox_base = 'https://' + url_base.replace('$PORT', '3001');
-      }
-
-      fetchJobResponses((url_codesandbox_base || url_base) + JOB_RESPONSE_URL, "GET");
+      fetchJobResponses(getBaseUrl() + JOB_RESPONSE_URL, "GET");
    }, [])
 
    const rows = jobResponsesArr.map((row) => (

@@ -4,6 +4,7 @@ import { JOB_RESPONSE_FIELDS, JOB_RESPONSE_KEYS } from '../../../../constants/te
 import { FormEvent } from 'react';
 import { CreateFormModalProps } from '../../../../types';
 import { JOB_RESPONSE_URL } from '../../../../constants/api.constants';
+import { getBaseUrl } from '@/app/lib/convertings';
 
 export function CreateFormModal({ opened, open, close, fetchJobResponses }: CreateFormModalProps) {
 
@@ -28,7 +29,7 @@ export function CreateFormModal({ opened, open, close, fetchJobResponses }: Crea
             }
          }
 
-         fetchJobResponses(process.env.NEXT_PUBLIC_API_URL + JOB_RESPONSE_URL, "POST", body);
+         fetchJobResponses(getBaseUrl() + JOB_RESPONSE_URL, "POST", body);
          form.reset()
          close()
       }

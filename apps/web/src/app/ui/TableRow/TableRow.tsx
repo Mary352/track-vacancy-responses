@@ -4,6 +4,7 @@ import { TableRowProps, UpdateBody } from '../../../../types';
 import { JOB_RESPONSE_ACTIONS_URLS, JOB_RESPONSE_URL } from '../../../../constants/api.constants';
 import { useDisclosure } from '@mantine/hooks';
 import { ConfirmModal } from '../ConfirmModal/ConfirmModal';
+import { getBaseUrl } from '@/app/lib/convertings';
 
 export function TableRow({ jobResponse, fetchJobResponses }: TableRowProps) {
    const [isOnEdit, setIsOnEdit] = useState(false);
@@ -40,7 +41,7 @@ export function TableRow({ jobResponse, fetchJobResponses }: TableRowProps) {
       if (salaryRange) body.newJobResponse.salary_range = salaryRange
       if (status) body.newJobResponse.status = status
 
-      fetchJobResponses(process.env.NEXT_PUBLIC_API_URL + JOB_RESPONSE_URL + JOB_RESPONSE_ACTIONS_URLS.update + `/${id}`, "POST", body);
+      fetchJobResponses(getBaseUrl() + JOB_RESPONSE_URL + JOB_RESPONSE_ACTIONS_URLS.update + `/${id}`, "POST", body);
       setIsOnEdit(false)
    }
 
