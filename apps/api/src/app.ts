@@ -7,7 +7,7 @@ import { sendErrorMessage } from './utils/response-messages.util';
 import cors from 'cors'
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 let timerId: ReturnType<typeof setTimeout>;
 
 app.use(express.json());
